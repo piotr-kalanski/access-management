@@ -1,6 +1,7 @@
 import React from 'react';
 import { DataGrid, ColDef, ValueFormatterParams } from '@material-ui/data-grid';
 import Link from '@material-ui/core/Link';
+import GrantAccessButton from './GrantAccessButton';
 
 const columns: ColDef[] = [
     {
@@ -20,6 +21,15 @@ const columns: ColDef[] = [
             <Link href={`/connection/${params.value}`}>{params.value}</Link>
         ),
     },
+    {
+        field: 'operations',
+        headerName: 'Operations',
+        sortable: false,
+        width: 160,
+        renderCell: (params: ValueFormatterParams) => (
+            <GrantAccessButton dataSetId={params.getValue('id') as string} />
+        ),  
+      },
 ];
 
 const rows = [
