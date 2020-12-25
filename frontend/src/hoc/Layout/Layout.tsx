@@ -10,17 +10,21 @@ import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Person from '@material-ui/icons/Person';
 import Storage from '@material-ui/icons/Storage';
 import Power from '@material-ui/icons/Power';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+import MenuIcon from '@material-ui/icons/Menu';
+import { Button } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -78,12 +82,19 @@ const useStyles = makeStyles(theme => ({
     }),
     marginLeft: 0,
   },
+  title: {
+    flexGrow: 1,
+  },
 }));
 
 const Layout = (props: any) => {
   const classes = useStyles();
   const theme = useTheme();
+
   const [open, setOpen] = React.useState(false);
+  const [auth, setAuth] = React.useState(true); // TODO - move to auth context
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -92,6 +103,60 @@ const Layout = (props: any) => {
   const handleDrawerClose = () => {
     setOpen(false);
   };
+
+  const handleUserAccountMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleUserAccountClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLogOut = () => {
+    // TODO - auth context
+    setAnchorEl(null);
+    setAuth(false);
+  }
+
+  let topRightComponent = null;
+
+  if(auth) {
+    topRightComponent = (
+      <div>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          onClick={handleUserAccountMenu}
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        <Menu
+          id="menu-appbar"
+          anchorEl={anchorEl}
+          anchorOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: 'top',
+            horizontal: 'right',
+          }}
+          open={Boolean(anchorEl)}
+          onClose={handleUserAccountClose}
+        >
+          <MenuItem onClick={handleLogOut}>Logout</MenuItem>
+        </Menu>
+      </div>
+    );
+  }
+  else {
+    topRightComponent = (
+      <Button color="inherit" onClick={() => setAuth(true)}>Login</Button>
+    );
+  }
 
   return (
     <div className={classes.root}>
@@ -112,9 +177,10 @@ const Layout = (props: any) => {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap>
+          <Typography variant="h6" className={classes.title}>
             Data Access Management
           </Typography>
+          {topRightComponent}
         </Toolbar>
       </AppBar>
       <Drawer
@@ -150,7 +216,7 @@ const Layout = (props: any) => {
         <List>
             <ListItem button component={Link} to="/logout">
               <ListItemIcon><ExitToAppIcon /></ListItemIcon>
-              <ListItemText primary="Logout" />
+              <ListItemText primary="Logout" onClick={handleLogOut} />
             </ListItem>
         </List>
       </Drawer>
