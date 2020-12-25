@@ -1,6 +1,8 @@
 import React from 'react';
 import { DataGrid, ColDef, ValueFormatterParams } from '@material-ui/data-grid';
 import Link from '@material-ui/core/Link';
+import Grid from '@material-ui/core/Grid';
+import CreateConnectionButton from './CreateConnectionButton';
 
 const columns: ColDef[] = [
     {
@@ -30,9 +32,16 @@ const rows = [
 
 const Connections = () => {
     return (
-        <div style={{ height: 500, width: '100%' }}>
-            <DataGrid rows={rows} columns={columns} pageSize={5} rowHeight={24} headerHeight={30} />
-        </div>
+        <Grid container spacing={3}>
+            <Grid item xs={12}>
+                <CreateConnectionButton />
+            </Grid>
+            <Grid item xs={12}>
+                <div style={{ height: 500, width: '100%' }}>
+                    <DataGrid rows={rows} columns={columns} pageSize={5} rowHeight={24} headerHeight={30} />
+                </div>
+            </Grid>
+        </Grid>
     )
 }
 
