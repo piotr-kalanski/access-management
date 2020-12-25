@@ -1,9 +1,7 @@
 import React from 'react';
-
-import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Grid from '@material-ui/core/Grid';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
-
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -30,6 +28,7 @@ export default function GrantAccessButton(props: GrantAccessButtonProps) {
     const [open, setOpen] = React.useState(false);
 
     const [userId, setUserId] = React.useState("");
+    const [userName, setUserName] = React.useState("");
     const [accessType, setAccessType] = React.useState("read");
 
     const handleClickOpen = () => {
@@ -39,6 +38,13 @@ export default function GrantAccessButton(props: GrantAccessButtonProps) {
     const handleClose = () => {
         setOpen(false);
     };
+
+    const handleUserChanged = (event: any, value: any) => {
+        if(value) {
+            setUserId(value.id);
+            setUserName(value.name);
+        }
+    }
 
     const handleGrant = () => {
         console.log(`Grant ${accessType} access to dataSet=${props.dataSetId} to user=${userId}`);
@@ -50,40 +56,41 @@ export default function GrantAccessButton(props: GrantAccessButtonProps) {
             <Button variant="contained" color="primary" size="small" onClick={handleClickOpen}>
                 Grant
             </Button>
-            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Grant access</DialogTitle>
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title" fullWidth>
+                <DialogTitle id="form-dialog-title">Grant</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                       dataset {props.dataSetId}
+                        Grant {accessType} access to {userName}
                     </DialogContentText>
-                    
-                    <FormControl>
-                        <InputLabel id="access-type-label">Access</InputLabel>
-                        <Select
-                            id="access-type"
-                            labelId="access-type-label"
-                            value={accessType}
-                            onChange={(event: any) => setAccessType(event.target.value)}
-                        >
-                            <MenuItem value="read">Read</MenuItem>
-                            <MenuItem value="write">Write</MenuItem>
-                        </Select>
-                    </FormControl>
-
-                    <br />
-                    <br />
-
-                    <Autocomplete
-                        id="user"
-                        options={users}
-                        getOptionLabel={(option: any) => option.name}
-                        style={{ width: 300 }}
-                        renderInput={(params) => <TextField {...params} label="User" variant="outlined" />}
-                        onChange={(event: any, value: any) => { if(value) setUserId(value.id) }}
-                    />
+                    <Grid container spacing={2}>
+                        <Grid item xs={12}>
+                            <FormControl variant="outlined">
+                                <InputLabel id="access-type-label">Access</InputLabel>
+                                <Select
+                                    id="access-type"
+                                    labelId="access-type-label"
+                                    value={accessType}
+                                    onChange={(event: any) => setAccessType(event.target.value)}
+                                >
+                                    <MenuItem value="read">Read access</MenuItem>
+                                    <MenuItem value="write">Write access</MenuItem>
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Autocomplete
+                                id="user"
+                                options={users}
+                                getOptionLabel={(option: any) => option.name}
+                                style={{ width: 300 }}
+                                renderInput={(params) => <TextField {...params} label="User" variant="outlined" />}
+                                onChange={handleUserChanged}
+                            />                            
+                        </Grid>                        
+                    </Grid>
                 </DialogContent>
                 <DialogActions>
-                <Button onClick={handleClose} color="secondary">
+                <Button onClick={handleClose} color="primary">
                     Cancel
                 </Button>
                 <Button onClick={handleGrant} color="primary">
