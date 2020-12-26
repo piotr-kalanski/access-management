@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
 
-from dam.connections.model import ConnectionMetadata
+from dam.model import ConnectionMetadata
 
 
 class ConnectionsRepository(ABC):
@@ -24,3 +24,10 @@ class FakeConnectionsRepository(ConnectionsRepository):
 
     def read_all(self) -> List[ConnectionMetadata]:
         return list(self.items.values())
+
+class ConnectionsRepositoryDynamoDB(ConnectionsRepository):
+    def save(self, connection_metadata: ConnectionMetadata):
+        ...  # TODO
+
+    def read_all(self) -> List[ConnectionMetadata]:
+        ...  # TODO

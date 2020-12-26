@@ -1,1 +1,6 @@
 pytest
+uvicorn
+flake8
+flake8-isort
+isort
+requests

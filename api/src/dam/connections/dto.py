@@ -1,10 +1,8 @@
+from typing import List
 from pydantic import BaseModel
 
-from dam.data_source_adapters.core.types import DataSourceType
-
-
 class ConnectionMetadataBase(BaseModel):
-    data_source_type: DataSourceType
+    data_source_type: str
     description: str
     secret_reference_to_connect: str
 
@@ -13,5 +11,9 @@ class CreateConnectionRequest(ConnectionMetadataBase):
     ...
 
 
-class ConnectionMetadata(ConnectionMetadataBase):
+class ConnectionMetadataDTO(ConnectionMetadataBase):
     id: str
+
+
+class GetConnectionsResponse(BaseModel):
+    items: List[ConnectionMetadataDTO]
