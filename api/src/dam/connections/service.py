@@ -1,9 +1,9 @@
+import os
 import uuid
-from typing import List
 from dam.data_source_adapters.core.types import DataSourceType
 from dam.model import ConnectionMetadata
 from dam.connections.dto import CreateConnectionRequest, ConnectionMetadataDTO, GetConnectionsResponse
-from .repository import ConnectionsRepository, ConnectionsRepositoryDynamoDB
+from .repository import ConnectionsRepository, ConnectionsRepositoryDynamoDB, FakeConnectionsRepository
 
 
 class ConnectionsMetadataService:
@@ -40,6 +40,11 @@ class ConnectionsMetadataService:
 
 
 def create_service_from_env() -> ConnectionsMetadataService:
-    return ConnectionsMetadataService(
+    if os.environ.get('IS_LOCAL') == 'true':
+        connection_repository = FakeConnectionsRepository()
+    else:
         connection_repository=ConnectionsRepositoryDynamoDB()
+
+    return ConnectionsMetadataService(
+        connection_repository=connection_repository
     )
