@@ -9,7 +9,7 @@ env:
   PYTHONPATH: api/src/
 
 jobs:
-  build:
+  api_tests:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
@@ -19,6 +19,7 @@ jobs:
         python-version: 3.8
     - name: Install dependencies
       run: |
+        cd api/
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Test with pytest
