@@ -1,5 +1,7 @@
 from enum import Enum
+
 from .exceptions import NotSupportedDataSource
+
 
 class DataSourceType(Enum):
     Redshift = "redshift"

@@ -1,16 +1,24 @@
 import os
 import uuid
+
+from dam.connections.dto import (ConnectionMetadataDTO,
+                                 CreateConnectionRequest,
+                                 GetConnectionsResponse)
 from dam.data_source_adapters.core.types import DataSourceType
 from dam.model import ConnectionMetadata
-from dam.connections.dto import CreateConnectionRequest, ConnectionMetadataDTO, GetConnectionsResponse
-from .repository import ConnectionsRepository, ConnectionsRepositoryDynamoDB, FakeConnectionsRepository
+
+from .repository import (ConnectionsRepository, ConnectionsRepositoryDynamoDB,
+                         FakeConnectionsRepository)
 
 
 class ConnectionsMetadataService:
     def __init__(self, connection_repository: ConnectionsRepository):
         self._connection_repository = connection_repository
 
-    def create_connection(self, ccr: CreateConnectionRequest) -> ConnectionMetadataDTO:
+    def create_connection(
+        self,
+        ccr: CreateConnectionRequest
+    ) -> ConnectionMetadataDTO:
         c = ConnectionMetadata(
             id=str(uuid.uuid4()),
             data_source_type=DataSourceType.from_str(ccr.data_source_type),
@@ -43,7 +51,7 @@ def create_service_from_env() -> ConnectionsMetadataService:
     if os.environ.get('IS_LOCAL') == 'true':
         connection_repository = FakeConnectionsRepository()
     else:
-        connection_repository=ConnectionsRepositoryDynamoDB()
+        connection_repository = ConnectionsRepositoryDynamoDB()
 
     return ConnectionsMetadataService(
         connection_repository=connection_repository

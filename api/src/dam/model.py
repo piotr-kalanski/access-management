@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+
 from dam.data_source_adapters.core.types import DataSourceType
 
 

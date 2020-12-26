@@ -14,6 +14,7 @@ class ConnectionsRepository(ABC):
     def read_all(self) -> List[ConnectionMetadata]:
         ...
 
+
 class FakeConnectionsRepository(ConnectionsRepository):
 
     def __init__(self):
@@ -24,6 +25,7 @@ class FakeConnectionsRepository(ConnectionsRepository):
 
     def read_all(self) -> List[ConnectionMetadata]:
         return list(self.items.values())
+
 
 class ConnectionsRepositoryDynamoDB(ConnectionsRepository):
     def save(self, connection_metadata: ConnectionMetadata):

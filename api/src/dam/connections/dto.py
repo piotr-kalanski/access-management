@@ -1,5 +1,7 @@
 from typing import List
+
 from pydantic import BaseModel
+
 
 class ConnectionMetadataBase(BaseModel):
     data_source_type: str

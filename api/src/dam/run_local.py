@@ -1,6 +1,8 @@
 import os
-from dam.app import app
+
 import uvicorn
+
+from dam.app import app
 
 if __name__ == "__main__":
     os.environ['IS_LOCAL'] = 'true'

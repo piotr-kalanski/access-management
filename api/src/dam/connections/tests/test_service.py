@@ -3,6 +3,7 @@ from dam.connections.repository import FakeConnectionsRepository
 from dam.connections.service import ConnectionsMetadataService
 from dam.data_source_adapters.core.types import DataSourceType
 
+
 def test_create_connection():
     # given
     repository = FakeConnectionsRepository()
