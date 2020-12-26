@@ -3,7 +3,7 @@ name: CI for API
 on:
   push:
     branches:
-      - master
+      - main
 
 env:
   PYTHONPATH: api/src/
