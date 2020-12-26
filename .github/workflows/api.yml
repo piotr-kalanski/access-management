@@ -29,4 +29,6 @@ jobs:
     - name: Test with pytest
       run: pytest
     - name: Code analysis
-      run: flake8 src
+      run: |
+        cd api/
+        flake8 src
