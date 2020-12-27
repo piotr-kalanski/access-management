@@ -2,10 +2,12 @@ from functools import lru_cache
 
 from fastapi import APIRouter, Depends
 
-from dam.connections.dto import ConnectionMetadataDTO, CreateConnectionRequest, GetConnectionsResponse
+import dam.connections.doc as doc
+from dam.connections.dto import (ConnectionMetadataDTO,
+                                 CreateConnectionRequest,
+                                 GetConnectionsResponse)
 from dam.connections.service import (ConnectionsMetadataService,
                                      create_service_from_env)
-import dam.connections.doc as doc
 
 router = APIRouter()
 

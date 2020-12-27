@@ -1,4 +1,5 @@
 from typing import List
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -8,10 +9,12 @@ from dam.connections.dto import ConnectionMetadataDTO, CreateConnectionRequest
 from dam.connections.repository import FakeConnectionsRepository
 from dam.connections.service import ConnectionsMetadataService
 from dam.data_source_adapters.core.types import DataSourceType
-from dam.model import ConnectionMetadata
 
 
-def _create_connections(test_api_client: TestClient, ccrs: List[CreateConnectionRequest]):
+def _create_connections(
+    test_api_client: TestClient,
+    ccrs: List[CreateConnectionRequest]
+):
     ids = []
     for ccr in ccrs:
         response = test_api_client.post("/connections", json=ccr.dict())
@@ -19,7 +22,9 @@ def _create_connections(test_api_client: TestClient, ccrs: List[CreateConnection
     return ids
 
 
-def _get_connections(test_api_client: TestClient) -> List[ConnectionMetadataDTO]:
+def _get_connections(
+    test_api_client: TestClient
+) -> List[ConnectionMetadataDTO]:
     response = test_api_client.get("/connections")
     assert response.status_code == 200, "Successfully get connections"
     response_json = response.json()
@@ -75,7 +80,7 @@ def test_delete_connection(test_api_client: TestClient):
             data_source_type=DataSourceType.Redshift.value,
             description="d2",
             secret_reference_to_connect="s2"
-        )        
+        )
     ])
     # when
     response = test_api_client.delete("/connections/" + identifiers[0])

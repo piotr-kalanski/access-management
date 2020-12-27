@@ -46,4 +46,3 @@ class ConnectionsRepositoryDynamoDB(ConnectionsRepository):
 
     def delete(self, id: str):
         ...  # TODO
-        

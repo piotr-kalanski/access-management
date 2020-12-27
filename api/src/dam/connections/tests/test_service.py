@@ -40,7 +40,7 @@ def test_remove_connection():
             data_source_type=DataSourceType.Redshift,
             description="d2",
             secret_reference_to_connect="s2"
-        ),        
+        ),
     ])
     service = ConnectionsMetadataService(repository)
 
