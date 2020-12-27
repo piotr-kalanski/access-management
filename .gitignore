@@ -3,3 +3,5 @@ env/
 .vscode/
 .env
 __pycache__/
+*.log
+.eslintcache
