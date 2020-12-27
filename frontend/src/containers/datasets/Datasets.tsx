@@ -29,7 +29,7 @@ const columns: ColDef[] = [
         renderCell: (params: ValueFormatterParams) => (
             <GrantAccessButton dataSetId={params.getValue('id') as string} />
         ),  
-      },
+    },
 ];
 
 const rows = [

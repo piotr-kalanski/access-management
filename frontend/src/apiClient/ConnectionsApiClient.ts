@@ -37,6 +37,16 @@ class ConnectionsApiClient {
         );
         return await response.json();
     }
+
+    async deleteConnection(connectionId: string): Promise<any> {
+        const response = await fetch(
+            `${this.baseURL}/connections/${connectionId}`,
+            {
+                method: 'DELETE'
+            }
+        );
+        return await response.json();
+    }
 };
 
 const instance = new ConnectionsApiClient(config.api.BASE_URL);

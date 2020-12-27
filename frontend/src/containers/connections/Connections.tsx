@@ -5,30 +5,43 @@ import Grid from '@material-ui/core/Grid';
 import CreateConnectionButton from './CreateConnectionButton';
 import connectionsApiClient from '../../apiClient/ConnectionsApiClient';
 import { Connection } from './interfaces';
-
-const columns: ColDef[] = [
-    {
-        field: 'id',
-        headerName: 'ID',
-        width: 150,
-        renderCell: (params: ValueFormatterParams) => (
-            <Link href={`/connection/${params.value}`}>{params.value}</Link>
-        ),
-    },
-    { field: 'description', headerName: 'Description', width: 400 },
-    {
-        field: 'data_source_type',
-        headerName: 'Type',
-        width: 200,
-        renderCell: (params: ValueFormatterParams) => (
-            <span>{params.value}</span>
-        ),
-    },
-    { field: 'secret_reference_to_connect', headerName: 'Secret Reference', width: 200 },
-];
+import DeleteConnectionButton from './DeleteConnectionButton';
 
 const Connections = () => {
     const [connections, setConnections] = React.useState<Array<Connection>>([]);
+
+    const columns: ColDef[] = [
+        {
+            field: 'id',
+            headerName: 'ID',
+            width: 120,
+            renderCell: (params: ValueFormatterParams) => (
+                <Link href={`/connection/${params.value}`}>{params.value}</Link>
+            ),
+        },
+        { field: 'description', headerName: 'Description', width: 300 },
+        {
+            field: 'data_source_type',
+            headerName: 'Type',
+            width: 200,
+            renderCell: (params: ValueFormatterParams) => (
+                <span>{params.value}</span>
+            ),
+        },
+        { field: 'secret_reference_to_connect', headerName: 'Secret ref', width: 200 },
+        {
+            field: 'operations',
+            headerName: 'Actions',
+            sortable: false,
+            width: 100,
+            renderCell: (params: ValueFormatterParams) => (
+                <DeleteConnectionButton
+                    connectionId={params.getValue('id') as string}
+                    onConnectionDeleted={handleConnectionDeleted}
+                />
+            ),  
+        },    
+    ];
 
     React.useEffect(() => {
         connectionsApiClient.getConnections()
@@ -43,6 +56,13 @@ const Connections = () => {
                 ...connections,
                 c
             ]);
+        },
+        [connections],
+    );
+
+    const handleConnectionDeleted = React.useCallback(
+        (connectionId: string) => {
+            setConnections(connections.filter(c => c.id !== connectionId));
         },
         [connections],
     );
