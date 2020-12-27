@@ -60,13 +60,14 @@ jobs:
     needs: [test_api, test_cdk]
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@master    
       - name: cdk diff
         uses: youyo/aws-cdk-github-actions@v1
         with:
           cdk_subcommand: 'diff'
           working_dir: 'infrastructure'
           cdk_stack: 'dev-data-access-management'
-          actions_comment: false   
+          actions_comment: true
       - name: cdk deploy
         uses: youyo/aws-cdk-github-actions@v1
         with:
