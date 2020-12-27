@@ -7,8 +7,7 @@ app = FastAPI(
     title="Data Access Management API"
 )
 
-# configure CORS (https://fastapi.tiangolo.com/tutorial/cors/), because API Gateway AWS_PROXY
-# doesn't have possibility to add response headers for CORS
+# configure CORS (https://fastapi.tiangolo.com/tutorial/cors/)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
