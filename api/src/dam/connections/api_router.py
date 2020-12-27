@@ -11,7 +11,7 @@ from dam.connections.service import (ConnectionsMetadataService,
 
 router = APIRouter()
 
-TAGS = ["connections"]
+TAGS = ["Connections"]
 
 
 @lru_cache
