@@ -5,7 +5,7 @@ from .exceptions import NotSupportedDataSource
 
 class DataSourceType(Enum):
     Redshift = "redshift"
-    AwsLakeFormation = "aws_lake_formation"
+    AwsLakeFormation = "awsLakeFormation"
 
     @staticmethod
     def from_str(label: str):

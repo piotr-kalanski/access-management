@@ -10,15 +10,23 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
 import { FormHelperText, TextField } from '@material-ui/core';
+import { Connection } from './interfaces';
+import connectionsApiClient from '../../apiClient/ConnectionsApiClient';
 
-export default function CreateConnectionButton() {
+interface CreateConnectionButtonProps {
+    onConnectionAdded: (c: Connection) => void
+}
+
+export default function CreateConnectionButton(props: CreateConnectionButtonProps) {
     const [open, setOpen] = React.useState(false);
 
     const [description, setDescription] = React.useState("");
     const [connectionType, setConnectionType] = React.useState("");
+    const [secretReferenceToConnect, setSecretReferenceToConnect] = React.useState("");
 
     const [invalidDescription, setInvalidDescription] = React.useState(false);
     const [invalidConnectionType, setInvalidConnectionType] = React.useState(false);
+    const [invalidSecretReferenceToConnect, setInvalidSecretReferenceToConnect] = React.useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -44,16 +52,46 @@ export default function CreateConnectionButton() {
         else {
             setInvalidConnectionType(false);
         }
-    }, [connectionType]);    
+    }, [connectionType]);
+
+    useEffect(() => {
+        if(!secretReferenceToConnect.trim()) {
+            setInvalidSecretReferenceToConnect(true);
+        }
+        else {
+            setInvalidSecretReferenceToConnect(false);
+        }
+    }, [secretReferenceToConnect]);    
 
     const handleCreate = () => {
-        let isValid = !invalidDescription && !invalidDescription;
+        let isValid = !invalidDescription && !invalidConnectionType && !invalidSecretReferenceToConnect;
 
         if(isValid) {
-            console.log(`Create new connection ${description} ${connectionType}`);
-            setOpen(false);
+            connectionsApiClient.createConnection({
+                description,
+                data_source_type: connectionType,
+                secret_reference_to_connect: secretReferenceToConnect
+            })
+                .then((response: Connection) => {
+                    props.onConnectionAdded(response);
+                    // TODO - alert context
+                    //alertContext.showSuccessAlert(t('role was successfully added', { type: roleType }));
+
+                    // clear form
+                    setDescription('');
+                    setConnectionType('');
+                    setSecretReferenceToConnect('');
+
+                    setOpen(false);
+                })
+                .catch((reason) => {
+                    // TODO - alert context
+                    //alertContext.showErrorAlert(reason.message);
+                });
         }
-    };    
+    };
+
+    // TODO - get data source types from API
 
     return (
         <React.Fragment>
@@ -90,11 +128,25 @@ export default function CreateConnectionButton() {
                                     error={invalidConnectionType}
                                 >
                                     <MenuItem value="redshift">Redshift</MenuItem>
-                                    <MenuItem value="lakeFormation">Lake Formation</MenuItem>
+                                    <MenuItem value="awsLakeFormation">Lake Formation</MenuItem>
                                 </Select>
                                 <FormHelperText error>{invalidConnectionType ? "Please select connection" : null}</FormHelperText>
                             </FormControl>
                         </Grid>
+                        <Grid item xs={12}>
+                            <FormControl>
+                                <TextField
+                                    id="secret-reference-to-connect"
+                                    label="Secret reference"
+                                    variant="outlined"
+                                    value={secretReferenceToConnect}
+                                    onChange={(event:any) => setSecretReferenceToConnect(event.target.value)}
+                                    fullWidth
+                                    error={invalidSecretReferenceToConnect}
+                                    helperText={invalidSecretReferenceToConnect ? "Secret reference can't be empty" : null}
+                                />
+                            </FormControl>
+                        </Grid>                        
                     </Grid>
                 </DialogContent>
                 <DialogActions>
@@ -106,8 +158,6 @@ export default function CreateConnectionButton() {
                 </Button>
                 </DialogActions>
             </Dialog>
-
-
         </React.Fragment>
     )
 };

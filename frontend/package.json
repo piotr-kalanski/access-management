@@ -11,9 +11,9 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@types/jest": "^26.0.15",
-    "@types/node": "^12.0.0",
     "@types/react": "^16.9.53",
     "@types/react-dom": "^16.9.8",
+    "env-cmd": "^10.1.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0",
@@ -23,7 +23,11 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start:dev": "env-cmd -f .env.dev react-scripts --max_old_space_size=4096 start",
+    "start:test": "env-cmd -f .env.test react-scripts --max_old_space_size=4096 start",
+    "build:dev": "env-cmd -f .env.dev react-scripts --max_old_space_size=4096 build",
+    "build:test": "env-cmd -f .env.test react-scripts --max_old_space_size=4096 build",
+    "build:live": "env-cmd -f .env.live react-scripts --max_old_space_size=4096 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "cypress:open": "cypress open"
@@ -47,6 +51,7 @@
     ]
   },
   "devDependencies": {
+    "@types/node": "^12.19.11",
     "@types/react-router-dom": "^5.1.6",
     "cypress": "^6.2.0"
   }

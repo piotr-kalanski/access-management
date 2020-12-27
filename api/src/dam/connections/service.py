@@ -20,7 +20,7 @@ class ConnectionsMetadataService:
         ccr: CreateConnectionRequest
     ) -> ConnectionMetadataDTO:
         c = ConnectionMetadata(
-            id=str(uuid.uuid4()),
+            id=str(uuid.uuid4())[:8],
             data_source_type=DataSourceType.from_str(ccr.data_source_type),
             description=ccr.description,
             secret_reference_to_connect=ccr.secret_reference_to_connect,
@@ -50,6 +50,12 @@ class ConnectionsMetadataService:
 def create_service_from_env() -> ConnectionsMetadataService:
     if os.environ.get('IS_LOCAL') == 'true':
         connection_repository = FakeConnectionsRepository()
+        connection_repository.save(ConnectionMetadata(
+            id="1",
+            data_source_type=DataSourceType.Redshift,
+            description="description1",
+            secret_reference_to_connect="secret1",
+        ))
     else:
         connection_repository = ConnectionsRepositoryDynamoDB()
 
