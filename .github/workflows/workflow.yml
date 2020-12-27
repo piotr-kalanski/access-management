@@ -1,4 +1,4 @@
-name: CI for API
+name: CI/CD pipeline for main branch
 
 on:
   push:
@@ -32,3 +32,28 @@ jobs:
       run: |
         cd api/
         flake8 src
+
+  test_cdk:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Use Node.js 10.x
+      uses: actions/setup-node@v1
+      with:
+        version: 10.x
+    - name: Install dependencies
+      run: |
+        cd infrastructure/
+        npm install
+    - name: CDK unit tests
+      run: |
+        cd infrastructure/
+        npm test  
+
+# TODO - test Cypress
+
+# TODO - deploy infrastructure using CDK
+
+# TODO - build React app and copy files to S3 bucket for static website
+
+# TODO - e2e tests
