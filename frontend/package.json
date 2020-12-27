@@ -53,6 +53,7 @@
   "devDependencies": {
     "@types/node": "^12.19.11",
     "@types/react-router-dom": "^5.1.6",
-    "cypress": "^6.2.0"
+    "cypress": "^6.2.0",
+    "msw": "^0.21.2"
   }
 }

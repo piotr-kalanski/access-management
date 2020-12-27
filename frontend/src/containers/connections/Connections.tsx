@@ -73,7 +73,7 @@ const Connections = () => {
                 <CreateConnectionButton onConnectionAdded={handleConnectionAdded} />
             </Grid>
             <Grid item xs={12}>
-                <div style={{ height: 500, width: '100%' }}>
+                <div style={{ height: 500, width: '100%' }} data-testid="connections">
                     <DataGrid rows={connections} columns={columns} pageSize={5} rowHeight={24} headerHeight={30} />
                 </div>
             </Grid>

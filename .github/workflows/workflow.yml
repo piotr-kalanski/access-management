@@ -53,11 +53,31 @@ jobs:
         cd infrastructure/
         npm test
 
-# TODO - React unit tests
-# TODO - Cypress tests
+  test_react_app:
+      runs-on: ubuntu-18.04
+      steps:
+      - uses: actions/checkout@master
 
+      - name: Use Node.js 10.x
+        uses: actions/setup-node@v1
+        with:
+          version: 10.x 
+
+      - name: Install
+        run: |
+          cd frontend
+          npm install 
+
+      - name: Unit test
+        run: |
+          cd frontend
+          CI=true npm test
+
+# TODO - Cypress tests - https://github.com/cypress-io/github-action
+
+  # based on https://github.com/marketplace/actions/aws-cdk-github-actions
   deploy_dev_infrastructure:
-    needs: [test_api, test_cdk]
+    needs: [test_api, test_cdk, test_react_app]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master    
@@ -78,6 +98,29 @@ jobs:
           actions_comment: false
 
 # TODO - build React app and copy files to S3 bucket for static website - dev
+        # runs-on: ubuntu-18.04
+        # steps:
+        # - uses: actions/checkout@master
+        
+        # - name: Use Node.js 10.x
+        #   uses: actions/setup-node@v1
+        #   with:
+        #     version: 10.x 
+
+        # - name: Install
+        #   run: npm install 
+        # - name: Build
+        #   run: npm run build --if-present
+
+        # - name: Configure AWS Credentials
+        #   uses: aws-actions/configure-aws-credentials@v1
+        #   with:
+        #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        #     aws-region: eu-west-1
+
+        # - name: Deploy static site to S3 bucket
+        #   run: aws s3 sync ./build/ s3://TARGET_BUCKET --delete
 
 # TODO - deploy test infrastructure using CDK
 # TODO - build React app and copy files to S3 bucket for static website - test
