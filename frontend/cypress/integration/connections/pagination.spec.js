@@ -3,7 +3,7 @@
 describe('Pagination in connections', () => {
     beforeEach(() => {
         const items = [];
-        for(var i = 1; i < 20; ++i) {
+        for(var i = 1; i <= 20; ++i) {
             items.push({
                 id: i + "",
                 data_source_type: "redshift",
