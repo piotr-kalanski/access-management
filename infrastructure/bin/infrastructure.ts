@@ -4,4 +4,18 @@ import * as cdk from '@aws-cdk/core';
 import { InfrastructureStack } from '../lib/infrastructure-stack';
 
 const app = new cdk.App();
-new InfrastructureStack(app, 'InfrastructureStack');
+
+function createStack(env: string) {
+    const baseStackName = 'data-access-management';
+    const stackDescription = 'Data Access Management';
+
+    new InfrastructureStack(app, `${env}-${baseStackName}`, {
+        staticWebsiteBucketName: `${env}.data-access-management` 
+    }, {
+        description: stackDescription
+    });
+}
+
+createStack('dev');
+createStack('test');
+createStack('live');
