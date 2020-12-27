@@ -1,6 +1,6 @@
 /// <reference types="Cypress" />
 
-describe('Connections Management', () => {
+describe('Create connection', () => {
     beforeEach(() => {      
         cy.intercept(
             {
