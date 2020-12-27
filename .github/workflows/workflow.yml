@@ -7,6 +7,9 @@ on:
 
 env:
   PYTHONPATH: api/src/
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  AWS_DEFAULT_REGION: 'eu-west-1' 
 
 jobs:
   test_api:
@@ -48,12 +51,36 @@ jobs:
     - name: CDK unit tests
       run: |
         cd infrastructure/
-        npm test  
+        npm test
 
-# TODO - test Cypress
+# TODO - React unit tests
+# TODO - Cypress tests
 
-# TODO - deploy infrastructure using CDK
+  deploy_dev_infrastructure:
+    needs: [test_api, test_cdk]
+    runs-on: ubuntu-latest
+    steps:
+      - name: cdk diff
+        uses: youyo/aws-cdk-github-actions@v1
+        with:
+          cdk_subcommand: 'diff'
+          working_dir: 'infrastructure'
+          cdk_stack: 'dev-data-access-management'
+          actions_comment: false   
+      - name: cdk deploy
+        uses: youyo/aws-cdk-github-actions@v1
+        with:
+          cdk_subcommand: 'deploy'
+          working_dir: 'infrastructure'
+          cdk_stack: 'dev-data-access-management'
+          cdk_args: '--require-approval never'
+          actions_comment: false
 
-# TODO - build React app and copy files to S3 bucket for static website
+# TODO - build React app and copy files to S3 bucket for static website - dev
 
-# TODO - e2e tests
+# TODO - deploy test infrastructure using CDK
+# TODO - build React app and copy files to S3 bucket for static website - test
+# TODO - e2e tests API
+
+# TODO - deploy live infrastructure using CDK
+# TODO - build React app and copy files to S3 bucket for static website - live
