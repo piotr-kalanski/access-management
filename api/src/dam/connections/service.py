@@ -37,6 +37,9 @@ class ConnectionsMetadataService:
             items=items
         )
 
+    def delete_connection(self, id: str):
+        self._connection_repository.delete(id)
+
     @staticmethod
     def _map_connection_to_dto(c: ConnectionMetadata) -> ConnectionMetadataDTO:
         return ConnectionMetadataDTO(
