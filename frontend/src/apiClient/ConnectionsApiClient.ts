@@ -1,6 +1,17 @@
 import config from '../config/config';
 import { Connection } from '../containers/connections/interfaces';
 
+export interface ConnectionDTO {
+    id: string
+    data_source_type: string
+    description: string
+    secret_reference_to_connect: string
+}
+
+interface GetConnectionsResponse {
+    items: Array<ConnectionDTO>
+}
+
 interface CreateConnectionRequest {
     data_source_type: string
     description: string
@@ -15,7 +26,7 @@ class ConnectionsApiClient {
         this.baseURL = baseURL;
     }
 
-    async getConnections(): Promise<Array<any>> {
+    async getConnections(): Promise<GetConnectionsResponse> {
         let apiUrl = `${this.baseURL}/connections`;
         
         const response = await fetch(
