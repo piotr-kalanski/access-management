@@ -2,6 +2,8 @@ import React from 'react';
 import { DataGrid, ColDef, ValueFormatterParams } from '@material-ui/data-grid';
 import Link from '@material-ui/core/Link';
 import GrantAccessButton from './GrantAccessButton';
+import dataCatalogApiClient, { DataSetDTO } from '../../apiClient/DataCatalogApiClient';
+
 
 const columns: ColDef[] = [
     {
@@ -12,15 +14,15 @@ const columns: ColDef[] = [
             <Link href={`/dataset/${params.value}`}>{params.value}</Link>
         ),
     },
-    { field: 'description', headerName: 'Description', width: 400 },
-    {
-        field: 'connectionId',
-        headerName: 'Connection',
+    { // TODO - display connection name
+        field: 'connection_metadata_id',
+        headerName: 'Connection ID',
         width: 300,
         renderCell: (params: ValueFormatterParams) => (
             <Link href={`/connection/${params.value}`}>{params.value}</Link>
         ),
-    },
+    },    
+    { field: 'description', headerName: 'Description', width: 400 },
     {
         field: 'operations',
         headerName: 'Operations',
@@ -32,16 +34,19 @@ const columns: ColDef[] = [
     },
 ];
 
-const rows = [
-    { id: "1", description: 'Table1', connectionId: 'redshiftLive' },
-    { id: "2", description: 'Table2', connectionId: 'redshiftLive' },
-    { id: "3", description: 'Table3', connectionId: 'redshiftLive' },
-];
-
 const Datasets = () => {
+    const [dataSets, setDataSets] = React.useState<Array<DataSetDTO>>([]);
+
+    React.useEffect(() => {
+        dataCatalogApiClient.getDataSets()
+            .then((response) => {
+                setDataSets(response.items);
+            })
+    }, []);
+
     return (
         <div style={{ height: 500, width: '100%' }}>
-            <DataGrid rows={rows} columns={columns} pageSize={5} rowHeight={24} headerHeight={30} />
+            <DataGrid rows={dataSets} columns={columns} pageSize={15} rowHeight={24} headerHeight={30} />
         </div>
     )
 }

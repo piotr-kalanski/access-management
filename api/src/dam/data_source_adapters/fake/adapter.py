@@ -11,7 +11,7 @@ class FakeDataSourceAdapter(DataSourceAdapter):
     def get_datasets(self) -> List[DataSet]:
         return [
             DataSet(
-                id=str(i),
+                id=self.cm.id + "_" + str(i),
                 description="desc_" + str(i),
                 connection_metadata=self.cm
             )
