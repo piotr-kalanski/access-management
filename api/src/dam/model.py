@@ -8,3 +8,9 @@ class ConnectionMetadata(BaseModel):
     data_source_type: DataSourceType
     description: str
     secret_reference_to_connect: str
+
+
+class DataSet(BaseModel):
+    id: str
+    description: str
+    connection_metadata: ConnectionMetadata
