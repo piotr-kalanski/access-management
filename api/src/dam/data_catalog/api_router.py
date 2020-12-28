@@ -1,9 +1,10 @@
 from functools import lru_cache
 
 from fastapi import APIRouter, Depends
-from dam.data_catalog.dto import GetDataSetsResponse
 
-from dam.data_catalog.service import DataCatalogService, create_service_from_env
+from dam.data_catalog.dto import GetDataSetsResponse
+from dam.data_catalog.service import (DataCatalogService,
+                                      create_service_from_env)
 
 router = APIRouter()
 

@@ -1,5 +1,5 @@
-from functools import lru_cache
 import uuid
+from functools import lru_cache
 
 from dam.connections.dto import (ConnectionMetadataDTO,
                                  CreateConnectionRequest,
@@ -7,7 +7,7 @@ from dam.connections.dto import (ConnectionMetadataDTO,
 from dam.data_source_adapters.core.types import DataSourceType
 from dam.model import ConnectionMetadata
 
-from .repository import (ConnectionsRepository, create_repository_from_env)
+from .repository import ConnectionsRepository, create_repository_from_env
 
 
 class ConnectionsMetadataService:

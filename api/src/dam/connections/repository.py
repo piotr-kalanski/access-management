@@ -1,9 +1,9 @@
+import os
 from abc import ABC, abstractmethod
 from functools import lru_cache
-import os
 from typing import List
-from dam.data_source_adapters.core.types import DataSourceType
 
+from dam.data_source_adapters.core.types import DataSourceType
 from dam.model import ConnectionMetadata
 
 

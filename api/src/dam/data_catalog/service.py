@@ -1,6 +1,7 @@
 from functools import lru_cache
 
-from dam.connections.repository import ConnectionsRepository, create_repository_from_env
+from dam.connections.repository import (ConnectionsRepository,
+                                        create_repository_from_env)
 from dam.data_catalog.dto import DataSetDTO, GetDataSetsResponse
 from dam.data_source_adapters.core import data_source_adapter_factory as dsaf
 from dam.model import DataSet
