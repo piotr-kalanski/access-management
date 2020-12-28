@@ -1,4 +1,4 @@
-import os
+from functools import lru_cache
 import uuid
 
 from dam.connections.dto import (ConnectionMetadataDTO,
@@ -7,8 +7,7 @@ from dam.connections.dto import (ConnectionMetadataDTO,
 from dam.data_source_adapters.core.types import DataSourceType
 from dam.model import ConnectionMetadata
 
-from .repository import (ConnectionsRepository, ConnectionsRepositoryDynamoDB,
-                         FakeConnectionsRepository)
+from .repository import (ConnectionsRepository, create_repository_from_env)
 
 
 class ConnectionsMetadataService:
@@ -50,18 +49,8 @@ class ConnectionsMetadataService:
             )
 
 
+@lru_cache
 def create_service_from_env() -> ConnectionsMetadataService:
-    if os.environ.get('IS_LOCAL') == 'true':
-        connection_repository = FakeConnectionsRepository()
-        connection_repository.save(ConnectionMetadata(
-            id="1",
-            data_source_type=DataSourceType.Redshift,
-            description="description1",
-            secret_reference_to_connect="secret1",
-        ))
-    else:
-        connection_repository = ConnectionsRepositoryDynamoDB()
-
     return ConnectionsMetadataService(
-        connection_repository=connection_repository
+        connection_repository=create_repository_from_env()
     )

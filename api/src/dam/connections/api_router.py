@@ -1,5 +1,3 @@
-from functools import lru_cache
-
 from fastapi import APIRouter, Depends
 
 import dam.connections.doc as doc
@@ -14,7 +12,6 @@ router = APIRouter()
 TAGS = ["Connections"]
 
 
-@lru_cache
 def connections_service() -> ConnectionsMetadataService:
     return create_service_from_env()
 

@@ -1,5 +1,8 @@
 from abc import ABC, abstractmethod
+from functools import lru_cache
+import os
 from typing import List
+from dam.data_source_adapters.core.types import DataSourceType
 
 from dam.model import ConnectionMetadata
 
@@ -46,3 +49,19 @@ class ConnectionsRepositoryDynamoDB(ConnectionsRepository):
 
     def delete(self, id: str):
         ...  # TODO
+
+
+@lru_cache
+def create_repository_from_env() -> ConnectionsRepository:
+    if os.environ.get('IS_LOCAL') == 'true':
+        connection_repository = FakeConnectionsRepository()
+        connection_repository.save(ConnectionMetadata(
+            id="fake1",
+            data_source_type=DataSourceType.Fake,
+            description="Fake Connection",
+            secret_reference_to_connect="",
+        ))
+    else:
+        connection_repository = ConnectionsRepositoryDynamoDB()
+    
+    return connection_repository
