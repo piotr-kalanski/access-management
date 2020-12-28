@@ -17,3 +17,12 @@ class UserDTO(UserBase):
 
 class GetUsersResponse(BaseModel):
     items: List[UserDTO]
+
+
+class UserAccountDTO(BaseModel):
+    name: str
+    connection_metadata_id: str
+
+
+class GetUserAccountsResponse(BaseModel):
+    items: List[UserAccountDTO]

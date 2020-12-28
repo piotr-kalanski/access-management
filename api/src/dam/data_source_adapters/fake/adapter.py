@@ -1,7 +1,7 @@
 from typing import List
 
 from dam.data_source_adapters.core.adapter import DataSourceAdapter
-from dam.model import ConnectionMetadata, DataSet
+from dam.model import ConnectionMetadata, DataSet, UserAccount
 
 
 class FakeDataSourceAdapter(DataSourceAdapter):
@@ -13,6 +13,15 @@ class FakeDataSourceAdapter(DataSourceAdapter):
             DataSet(
                 id=self.cm.id + "_" + str(i),
                 description="desc_" + str(i),
+                connection_metadata=self.cm
+            )
+            for i in range(1, 11)
+        ]
+
+    def get_user_accounts(self) -> List[UserAccount]:
+        return [
+            UserAccount(
+                name=self.cm.id + "_" + str(i),
                 connection_metadata=self.cm
             )
             for i in range(1, 11)

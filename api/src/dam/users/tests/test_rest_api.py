@@ -4,8 +4,11 @@ import pytest
 from fastapi.testclient import TestClient
 
 from dam.app import app
+from dam.connections.repository import FakeConnectionsRepository
+from dam.data_source_adapters.core.types import DataSourceType
+from dam.model import ConnectionMetadata
 from dam.users.api_router import users_service
-from dam.users.dto import CreateUserRequest, UserDTO
+from dam.users.dto import CreateUserRequest, GetUserAccountsResponse, UserDTO
 from dam.users.repository import FakeUsersRepository
 from dam.users.service import UsersService
 
@@ -38,7 +41,15 @@ def test_api_client() -> TestClient:
 
     def fake_users_service():
         return UsersService(
-            user_repository=user_repository
+            user_repository=user_repository,
+            connection_repository=FakeConnectionsRepository([
+                ConnectionMetadata(
+                    id="f1",
+                    data_source_type=DataSourceType.Fake,
+                    description="fake1",
+                    secret_reference_to_connect=""
+                )
+            ])
         )
 
     app.dependency_overrides[users_service] = fake_users_service
@@ -83,3 +94,16 @@ def test_delete_user(test_api_client: TestClient):
     assert len(users) == 1, "There should be one user"
     c = users[0]
     assert c.id == identifiers[1]
+
+
+def test_get_user_accounts(test_api_client: TestClient):
+    # when
+    response = test_api_client.get("/users_accounts")
+
+    # then
+    assert response.status_code == 200, "User accounts returned successfully"
+
+    get_user_accounts_response = GetUserAccountsResponse(**response.json())
+    user_accounts = get_user_accounts_response.items
+
+    assert len(user_accounts) == 10  # fake data source has static 10 datasets

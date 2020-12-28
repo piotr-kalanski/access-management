@@ -1,7 +1,8 @@
 from fastapi import APIRouter, Depends
 
 import dam.users.doc as doc
-from dam.users.dto import CreateUserRequest, GetUsersResponse, UserDTO
+from dam.users.dto import (CreateUserRequest, GetUserAccountsResponse,
+                           GetUsersResponse, UserDTO)
 from dam.users.service import UsersService, create_service_from_env
 
 router = APIRouter()
@@ -48,3 +49,15 @@ async def delete_user(
     service: UsersService = Depends(users_service)
 ):
     return service.delete_user(user_id)
+
+
+@router.get(
+    "/users_accounts",
+    tags=TAGS,
+    description="Get all users accounts",
+    response_model=GetUserAccountsResponse,
+)
+async def get_users_accounts(
+    service: UsersService = Depends(users_service)
+):
+    return service.get_user_accounts()

@@ -19,3 +19,8 @@ class DataSet(BaseModel):
 class User(BaseModel):
     id: str
     name: str
+
+
+class UserAccount(BaseModel):
+    name: str
+    connection_metadata: ConnectionMetadata
