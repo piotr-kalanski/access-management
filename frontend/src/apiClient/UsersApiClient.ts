@@ -13,6 +13,15 @@ interface CreateUserRequest {
     name: string
 }
 
+export interface UserAccountDTO {
+    id: string
+    connection_metadata_id: string
+}
+
+interface GetUserAccountsResponse {
+    items: Array<UserAccountDTO>    
+}
+
 class UsersApiClient {
 
     baseURL: string
@@ -53,6 +62,18 @@ class UsersApiClient {
         );
         return await response.json();
     }
+
+    async getUsersAccounts(): Promise<GetUserAccountsResponse> {
+        let apiUrl = `${this.baseURL}/users_accounts`;
+        
+        const response = await fetch(
+            apiUrl,
+            {
+                method: 'GET',
+            }
+        );
+        return await response.json();
+    }    
 };
 
 const instance = new UsersApiClient(config.api.BASE_URL);

@@ -21,7 +21,7 @@ class FakeDataSourceAdapter(DataSourceAdapter):
     def get_user_accounts(self) -> List[UserAccount]:
         return [
             UserAccount(
-                name=self.cm.id + "_" + str(i),
+                id=self.cm.id + "_" + str(i),
                 connection_metadata=self.cm
             )
             for i in range(1, 11)

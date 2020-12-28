@@ -20,7 +20,7 @@ class GetUsersResponse(BaseModel):
 
 
 class UserAccountDTO(BaseModel):
-    name: str
+    id: str
     connection_metadata_id: str
 
 

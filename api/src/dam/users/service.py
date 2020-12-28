@@ -64,7 +64,7 @@ class UsersService:
     @staticmethod
     def _map_to_user_account_dto(ua: UserAccount) -> UserAccountDTO:
         return UserAccountDTO(
-            name=ua.name,
+            id=ua.id,
             connection_metadata_id=ua.connection_metadata.id,
         )
 

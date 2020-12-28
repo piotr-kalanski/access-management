@@ -7,6 +7,7 @@ import Connections from './containers/connections/Connections';
 import Dataset from './containers/dataset/Dataset';
 import Datasets from './containers/datasets/Datasets';
 import Users from './containers/users/Users';
+import UsersAccounts from './containers/users_accounts/UsersAccounts';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/dataset" component={Dataset} />
           <Route path="/datasets" component={Datasets} />
           <Route path="/users" component={Users} />
+          <Route path="/users_accounts" component={UsersAccounts} />
         </Switch>
       </Layout>
     </BrowserRouter>

@@ -17,6 +17,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
+import { Button } from '@material-ui/core';
 
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import Person from '@material-ui/icons/Person';
@@ -24,7 +25,6 @@ import Storage from '@material-ui/icons/Storage';
 import Power from '@material-ui/icons/Power';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuIcon from '@material-ui/icons/Menu';
-import { Button } from '@material-ui/core';
 
 const drawerWidth = 240;
 
@@ -210,7 +210,11 @@ const Layout = (props: any) => {
             <ListItem button component={Link} to="/users">
               <ListItemIcon><Person /></ListItemIcon>
               <ListItemText primary="Users" />
-            </ListItem>            
+            </ListItem>
+            <ListItem button component={Link} to="/users_accounts">
+              <ListItemIcon><AccountCircle /></ListItemIcon>
+              <ListItemText primary="Users accounts" />
+            </ListItem>
         </List>
         <Divider />
         <List>

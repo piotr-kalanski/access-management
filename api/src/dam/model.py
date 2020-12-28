@@ -22,5 +22,5 @@ class User(BaseModel):
 
 
 class UserAccount(BaseModel):
-    name: str
+    id: str
     connection_metadata: ConnectionMetadata
