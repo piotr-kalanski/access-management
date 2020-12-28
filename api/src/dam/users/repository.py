@@ -61,8 +61,8 @@ def create_repository_from_env() -> UsersRepository:
         users_repository.save(User(
             id="u2",
             name="Fake user2"
-        ))        
+        ))
     else:
         users_repository = UsersRepositoryDynamoDB()
-    
+
     return users_repository

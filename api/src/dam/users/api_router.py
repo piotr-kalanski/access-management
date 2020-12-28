@@ -1,11 +1,8 @@
 from fastapi import APIRouter, Depends
 
 import dam.users.doc as doc
-from dam.users.dto import (UserDTO,
-                           CreateUserRequest,
-                           GetUsersResponse)
-from dam.users.service import (UsersService,
-                               create_service_from_env)
+from dam.users.dto import CreateUserRequest, GetUsersResponse, UserDTO
+from dam.users.service import UsersService, create_service_from_env
 
 router = APIRouter()
 

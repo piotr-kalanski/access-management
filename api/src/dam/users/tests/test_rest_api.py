@@ -5,10 +5,9 @@ from fastapi.testclient import TestClient
 
 from dam.app import app
 from dam.users.api_router import users_service
-from dam.users.dto import UserDTO, CreateUserRequest
+from dam.users.dto import CreateUserRequest, UserDTO
 from dam.users.repository import FakeUsersRepository
 from dam.users.service import UsersService
-from dam.data_source_adapters.core.types import DataSourceType
 
 
 def _create_users(

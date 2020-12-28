@@ -63,5 +63,5 @@ def create_repository_from_env() -> ConnectionsRepository:
         ))
     else:
         connection_repository = ConnectionsRepositoryDynamoDB()
-    
+
     return connection_repository
