@@ -66,7 +66,7 @@ def create_repository_from_env() -> ConnectionsRepository:
             data_source_type=DataSourceType.Fake,
             description="Fake Connection 2",
             secret_reference_to_connect="fake secret 2",
-        ))        
+        ))
     else:
         connection_repository = ConnectionsRepositoryDynamoDB()
 

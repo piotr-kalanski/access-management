@@ -24,3 +24,9 @@ class User(BaseModel):
 class UserAccount(BaseModel):
     id: str
     connection_metadata: ConnectionMetadata
+
+
+class UserAccountAssignment(BaseModel):
+    user_id: str
+    user_account_id: str
+    connection_metadata_id: str

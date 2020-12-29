@@ -9,8 +9,10 @@ from dam.data_source_adapters.core.types import DataSourceType
 from dam.model import ConnectionMetadata
 from dam.users.api_router import users_service
 from dam.users.dto import CreateUserRequest, GetUserAccountsResponse, UserDTO
-from dam.users.repository import FakeUsersRepository
 from dam.users.service import UsersService
+from dam.users.users_account_assignment_repository import \
+    FakeUserAccountAssignmentRepository
+from dam.users.users_repository import FakeUsersRepository
 
 
 def _create_users(
@@ -42,6 +44,7 @@ def test_api_client() -> TestClient:
     def fake_users_service():
         return UsersService(
             user_repository=user_repository,
+            uaa_repository=FakeUserAccountAssignmentRepository(),
             connection_repository=FakeConnectionsRepository([
                 ConnectionMetadata(
                     id="f1",
