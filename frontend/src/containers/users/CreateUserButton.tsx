@@ -7,11 +7,10 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { TextField } from '@material-ui/core';
-import { User } from './interfaces';
-import usersApiClient from '../../apiClient/UsersApiClient';
+import usersApiClient, { UserDTO } from '../../apiClient/UsersApiClient';
 
 interface CreateUserButtonProps {
-    onUserAdded: (c: User) => void
+    onUserAdded: (u: UserDTO) => void
 }
 
 export default function CreateUserButton(props: CreateUserButtonProps) {
@@ -45,7 +44,7 @@ export default function CreateUserButton(props: CreateUserButtonProps) {
             usersApiClient.createUser({
                 name
             })
-                .then((response: User) => {
+                .then((response: UserDTO) => {
                     props.onUserAdded(response);
                     // TODO - alert context
                     //alertContext.showSuccessAlert(t('role was successfully added', { type: roleType }));

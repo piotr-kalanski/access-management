@@ -1,8 +1,14 @@
 import config from '../config/config';
 
+interface UserAccountBasicDTO {
+    id: string
+    connection_metadata_id: string
+}
+
 export interface UserDTO {
     id: string
     name: string
+    accounts: Array<UserAccountBasicDTO>
 }
 
 interface GetUsersResponse {
@@ -16,10 +22,17 @@ interface CreateUserRequest {
 export interface UserAccountDTO {
     id: string
     connection_metadata_id: string
+    user_id?: string
 }
 
 interface GetUserAccountsResponse {
     items: Array<UserAccountDTO>    
+}
+
+interface AssignUserAccountRequest {
+    user_id: string
+    user_account_id: string
+    connection_metadata_id: string
 }
 
 class UsersApiClient {
@@ -70,6 +83,17 @@ class UsersApiClient {
             apiUrl,
             {
                 method: 'GET',
+            }
+        );
+        return await response.json();
+    }
+
+    async assingUserAccount(auar: AssignUserAccountRequest): Promise<any> {
+        const response = await fetch(
+            `${this.baseURL}/users/assign`,
+            {
+                method: 'POST',
+                body: JSON.stringify(auar),
             }
         );
         return await response.json();
