@@ -1,8 +1,8 @@
 from fastapi import APIRouter, Depends
 
 import dam.users.doc as doc
-from dam.users.dto import (CreateUserRequest, GetUserAccountsResponse,
-                           GetUsersResponse, UserDTO)
+from dam.users.dto import (AssignUserAccountRequest, CreateUserRequest,
+                           GetUserAccountsResponse, GetUsersResponse, UserDTO)
 from dam.users.service import UsersService, create_service_from_env
 
 router = APIRouter()
@@ -61,3 +61,15 @@ async def get_users_accounts(
     service: UsersService = Depends(users_service)
 ):
     return service.get_user_accounts()
+
+
+@router.post(
+    "/users/assign",
+    tags=TAGS,
+    description="Assign user account to user",
+)
+async def assign_user_account(
+    uaar: AssignUserAccountRequest,
+    service: UsersService = Depends(users_service)
+):
+    return service.assign_user_account(uaar)
