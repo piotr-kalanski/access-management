@@ -1,8 +1,7 @@
 from fastapi import APIRouter, Depends
+
 from dam.access.dto import GrantAccessRequest
-
 from dam.access.service import AccessManagementService, create_service_from_env
-
 
 router = APIRouter()
 

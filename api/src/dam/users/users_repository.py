@@ -45,6 +45,7 @@ class FakeUsersRepository(UsersRepository):
     def read(self, id: str) -> User:
         return self.items[id]
 
+
 class UsersRepositoryDynamoDB(UsersRepository):
     def save(self, user: User):
         ...  # TODO

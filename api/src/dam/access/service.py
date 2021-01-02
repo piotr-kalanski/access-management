@@ -1,11 +1,12 @@
 from functools import lru_cache
-from dam.access.dto import GetUserAccessRightsResponse, GrantAccessRequest, UserAccessRightDTO
+
 import dam.connections.repository as cr
+import dam.users.service as us
+from dam.access.dto import (GetUserAccessRightsResponse, GrantAccessRequest,
+                            UserAccessRightDTO)
 from dam.data_source_adapters.core import data_source_adapter_factory as dsaf
 from dam.data_source_adapters.core.types import AccessType
 from dam.model import AccessPolicy
-import dam.users.service as us
-import dam.connections.repository as cr
 
 
 class AccessManagementService:
@@ -34,7 +35,10 @@ class AccessManagementService:
             access_type=AccessType.from_str(gar.access_type),
         )
 
-    def get_user_access_rights(self, user_id: str) -> GetUserAccessRightsResponse:
+    def get_user_access_rights(
+        self,
+        user_id: str
+    ) -> GetUserAccessRightsResponse:
         user = self._users_service.get_user(user_id)
         user_account_ids = [a.id for a in user.accounts]
 
@@ -50,7 +54,10 @@ class AccessManagementService:
 
         return GetUserAccessRightsResponse(rights=rights)
 
-    def _map_to_user_access_right(self, ap: AccessPolicy) -> UserAccessRightDTO:
+    def _map_to_user_access_right(
+        self,
+        ap: AccessPolicy
+    ) -> UserAccessRightDTO:
         return UserAccessRightDTO(
             connection_metadata_id=ap.connection_metadata_id,
             dataset_id=ap.dataset_id,

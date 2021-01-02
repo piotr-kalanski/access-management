@@ -1,6 +1,6 @@
 from enum import Enum
 
-from .exceptions import NotSupportedDataSource, NotSupportedAccessType
+from .exceptions import NotSupportedAccessType, NotSupportedDataSource
 
 
 class DataSourceType(Enum):
@@ -28,4 +28,3 @@ class AccessType(Enum):
                 return at
 
         raise NotSupportedAccessType(label)
-    

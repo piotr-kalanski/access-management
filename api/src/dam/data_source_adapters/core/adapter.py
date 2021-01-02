@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import List
-from dam.data_source_adapters.core.types import AccessType
 
+from dam.data_source_adapters.core.types import AccessType
 from dam.model import AccessPolicy, DataSet, UserAccount
 
 

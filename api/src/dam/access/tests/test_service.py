@@ -5,13 +5,14 @@ from dam.data_source_adapters.core.types import DataSourceType
 from dam.model import ConnectionMetadata, User
 from dam.users.dto import AssignUserAccountRequest
 from dam.users.service import UsersService
-from dam.users.users_account_assignment_repository import FakeUserAccountAssignmentRepository
+from dam.users.users_account_assignment_repository import \
+    FakeUserAccountAssignmentRepository
 from dam.users.users_repository import FakeUsersRepository
 
 
 def test_grant_access():
     # given
-    connection_repository=FakeConnectionsRepository([
+    connection_repository = FakeConnectionsRepository([
         ConnectionMetadata(
             id="c1",
             data_source_type=DataSourceType.Fake,
@@ -19,7 +20,7 @@ def test_grant_access():
             secret_reference_to_connect="",
         )
     ])
-    users_service=UsersService(
+    users_service = UsersService(
         user_repository=FakeUsersRepository([
             User(
                 id="u1",

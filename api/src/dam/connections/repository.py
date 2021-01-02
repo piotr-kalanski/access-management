@@ -46,6 +46,7 @@ class FakeConnectionsRepository(ConnectionsRepository):
     def read(self, id) -> ConnectionMetadata:
         return self.items[id]
 
+
 class ConnectionsRepositoryDynamoDB(ConnectionsRepository):
     def save(self, connection_metadata: ConnectionMetadata):
         ...  # TODO
