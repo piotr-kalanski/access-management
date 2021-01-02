@@ -1,2 +1,6 @@
 class NotSupportedDataSource(Exception):
     ...
+
+
+class NotSupportedAccessType(Exception):
+    ...

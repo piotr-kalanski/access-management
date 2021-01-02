@@ -30,3 +30,11 @@ class UserAccountAssignment(BaseModel):
     user_id: str
     user_account_id: str
     connection_metadata_id: str
+
+
+class AccessPolicy(BaseModel):
+    connection_metadata_id: str
+    user_account_id: str
+    dataset_id: str
+    has_read_access: bool
+    has_write_access: bool

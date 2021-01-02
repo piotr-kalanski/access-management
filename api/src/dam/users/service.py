@@ -45,6 +45,11 @@ class UsersService:
             items=items
         )
 
+    def get_user(self, user_id: str) -> UserDTO:
+        mapping = self._get_mapping_from_user_to_accounts()
+        u = self._user_repository.read(user_id)
+        return self._map_user_to_dto(u, mapping)
+
     def delete_user(self, id: str):
         self._user_repository.delete(id)
 

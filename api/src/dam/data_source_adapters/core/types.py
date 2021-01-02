@@ -1,6 +1,6 @@
 from enum import Enum
 
-from .exceptions import NotSupportedDataSource
+from .exceptions import NotSupportedDataSource, NotSupportedAccessType
 
 
 class DataSourceType(Enum):
@@ -15,3 +15,17 @@ class DataSourceType(Enum):
                 return d
 
         raise NotSupportedDataSource(label)
+
+
+class AccessType(Enum):
+    Read = "read"
+    Write = "write"
+
+    @staticmethod
+    def from_str(label: str):
+        for at in AccessType:
+            if label == at.value:
+                return at
+
+        raise NotSupportedAccessType(label)
+    

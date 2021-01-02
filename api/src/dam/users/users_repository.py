@@ -20,6 +20,10 @@ class UsersRepository(ABC):
     def delete(self, id: str):
         ...
 
+    @abstractmethod
+    def read(self, id: str) -> User:
+        ...
+
 
 class FakeUsersRepository(UsersRepository):
 
@@ -38,6 +42,8 @@ class FakeUsersRepository(UsersRepository):
     def delete(self, id: str):
         del self.items[id]
 
+    def read(self, id: str) -> User:
+        return self.items[id]
 
 class UsersRepositoryDynamoDB(UsersRepository):
     def save(self, user: User):
@@ -47,6 +53,9 @@ class UsersRepositoryDynamoDB(UsersRepository):
         ...  # TODO
 
     def delete(self, id: str):
+        ...  # TODO
+
+    def read(self, id: str) -> User:
         ...  # TODO
 
 

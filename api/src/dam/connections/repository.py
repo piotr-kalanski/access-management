@@ -21,6 +21,10 @@ class ConnectionsRepository(ABC):
     def delete(self, id: str):
         ...
 
+    @abstractmethod
+    def read(self, id) -> ConnectionMetadata:
+        ...
+
 
 class FakeConnectionsRepository(ConnectionsRepository):
 
@@ -39,6 +43,8 @@ class FakeConnectionsRepository(ConnectionsRepository):
     def delete(self, id: str):
         del self.items[id]
 
+    def read(self, id) -> ConnectionMetadata:
+        return self.items[id]
 
 class ConnectionsRepositoryDynamoDB(ConnectionsRepository):
     def save(self, connection_metadata: ConnectionMetadata):
@@ -48,6 +54,9 @@ class ConnectionsRepositoryDynamoDB(ConnectionsRepository):
         ...  # TODO
 
     def delete(self, id: str):
+        ...  # TODO
+
+    def read(self, id) -> ConnectionMetadata:
         ...  # TODO
 
 
